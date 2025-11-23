@@ -1,0 +1,6 @@
+@ModForgeFS_HostAddress = http://localhost:5027
+
+GET {{ModForgeFS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
