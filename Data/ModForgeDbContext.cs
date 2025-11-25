@@ -1,13 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ModForge.Models;
+using ModForgeFS.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace ModForge.Data;
+namespace ModForgeFS.Data;
 public class ModForgeDbContext : IdentityDbContext<IdentityUser>
 {
     private readonly IConfiguration _configuration;
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Build> Builds { get; set; }
+        public DbSet<ModPart> ModParts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ModTag> ModTags { get; set; }
 
     public ModForgeDbContext(DbContextOptions<ModForgeDbContext> context, IConfiguration config) : base(context)
     {
@@ -47,6 +51,89 @@ public class ModForgeDbContext : IdentityDbContext<IdentityUser>
             ImageLocation = "https://robohash.org/numquamutut.png?size=150x150&set=set1",
             CreateDateTime = new DateTime(2022, 1, 25)
         });
+
+        modelBuilder.Entity<Build>().HasData(
+            new Build
+            {
+                Id = 1,
+                VehicleName = "2014 Mustang GT",
+                ImageLocation = "https://placehold.co/600x400",
+                Goal = "Street performance",
+                Status = "In Progress",
+                StartDate = new DateTime(2025, 10, 1),
+                Budget = 5000m,
+                Notes = "Intake, exhaust, tune first.",
+                CreatedAt = new DateTime(2025, 10, 1)
+            },
+            new Build
+            {
+                Id = 2,
+                VehicleName = "2006 Yamaha R6",
+                ImageLocation = "https://placehold.co/600x400",
+                Goal = "Track ready",
+                Status = "Planned",
+                StartDate = new DateTime(2025, 11, 10),
+                Budget = 3500m,
+                Notes = "Suspension and braking upgrades.",
+                CreatedAt = new DateTime(2025, 11, 10)
+            }
+        );
+
+        modelBuilder.Entity<ModPart>().HasData(
+            new ModPart
+            {
+                Id = 1,
+                BuildId = 1,
+                Brand = "K&N",
+                ModName = "Cold Air Intake",
+                ModType = "Intake",
+                Cost = 379.99m,
+                InstallDate = new DateTime(2025, 10, 5),
+                Link = "https://example.com/intake",
+                Notes = "Better throttle response.",
+                CreatedAt = new DateTime(2025, 10, 5)
+            },
+            new ModPart
+            {
+                Id = 2,
+                BuildId = 1,
+                Brand = "Borla",
+                ModName = "Cat-back Exhaust",
+                ModType = "Exhaust",
+                Cost = 1299.00m,
+                InstallDate = new DateTime(2025, 10, 20),
+                Link = "https://example.com/exhaust",
+                Notes = "Deep tone, minimal drone.",
+                CreatedAt = new DateTime(2025, 10, 20)
+            },
+            new ModPart
+            {
+                Id = 3,
+                BuildId = 2,
+                Brand = "Öhlins",
+                ModName = "Rear Shock",
+                ModType = "Suspension",
+                Cost = 999.00m,
+                InstallDate = new DateTime(2025, 11, 15),
+                Link = "https://example.com/shock",
+                Notes = "Track baseline setup.",
+                CreatedAt = new DateTime(2025, 11, 15)
+            }
+        );
+
+        modelBuilder.Entity<Tag>().HasData(
+            new Tag { Id = 1, Name = "Performance" },
+            new Tag { Id = 2, Name = "Cosmetic" },
+            new Tag { Id = 3, Name = "Reliability" },
+            new Tag { Id = 4, Name = "Track" }
+        );
+
+        modelBuilder.Entity<ModTag>().HasData(
+            new ModTag { Id = 1, ModId = 1, TagId = 1 },
+            new ModTag { Id = 2, ModId = 2, TagId = 1 },
+            new ModTag { Id = 3, ModId = 3, TagId = 1 },
+            new ModTag { Id = 4, ModId = 3, TagId = 4 }
+        );
 
     }  
 }

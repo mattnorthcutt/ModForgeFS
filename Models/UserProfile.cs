@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace ModForge.Models;
+namespace ModForgeFS.Models;
 public class UserProfile
 {
     public int Id { get; set; }

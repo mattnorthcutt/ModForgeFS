@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-namespace ModForge.Models.DTOs;
+namespace ModForgeFS.Models.DTOs;
 public class UserProfileDTO
 {
     public int Id { get; set; }
