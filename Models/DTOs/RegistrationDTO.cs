@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ModForge.Models.DTOs;
+namespace ModForgeFS.Models.DTOs;
 
 public class RegistrationDTO
 {
@@ -13,7 +13,7 @@ public class RegistrationDTO
     [Required]
     public string FirstName { get; set; }
     [Required]
-    public string LastName { get; set; }
+    public required string LastName { get; set; }
     [DataType(DataType.Url)]
     public string? ImageLocation { get; set; }
 

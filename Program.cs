@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using ModForge.Data;
+using ModForgeFS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 //github issue comment so I can resubmit a PR

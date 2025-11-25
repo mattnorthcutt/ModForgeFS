@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text;
-using ModForge.Models;
-using ModForge.Models.DTOs;
-using ModForge.Data;
+using ModForgeFS.Models;
+using ModForgeFS.Models.DTOs;
+using ModForgeFS.Data;
 
 
-namespace ModForge.Controllers;
+namespace ModForgeFS.Controllers;
 
 
 [ApiController]
