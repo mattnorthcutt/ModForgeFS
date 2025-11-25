@@ -129,10 +129,10 @@ public class ModForgeDbContext : IdentityDbContext<IdentityUser>
         );
 
         modelBuilder.Entity<ModTag>().HasData(
-            new ModTag { Id = 1, ModId = 1, TagId = 1 },
-            new ModTag { Id = 2, ModId = 2, TagId = 1 },
-            new ModTag { Id = 3, ModId = 3, TagId = 1 },
-            new ModTag { Id = 4, ModId = 3, TagId = 4 }
+            new ModTag { Id = 1, ModPartId = 1, TagId = 1 },
+            new ModTag { Id = 2, ModPartId = 2, TagId = 1 },
+            new ModTag { Id = 3, ModPartId = 3, TagId = 1 },
+            new ModTag { Id = 4, ModPartId = 3, TagId = 4 }
         );
 
     }  
