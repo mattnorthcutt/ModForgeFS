@@ -63,7 +63,8 @@ public class ModForgeDbContext : IdentityDbContext<IdentityUser>
                 StartDate = new DateTime(2025, 10, 1),
                 Budget = 5000m,
                 Notes = "Intake, exhaust, tune first.",
-                CreatedAt = new DateTime(2025, 10, 1)
+                CreatedAt = new DateTime(2025, 10, 1),
+                UserProfileId = 1
             },
             new Build
             {
@@ -75,7 +76,8 @@ public class ModForgeDbContext : IdentityDbContext<IdentityUser>
                 StartDate = new DateTime(2025, 11, 10),
                 Budget = 3500m,
                 Notes = "Suspension and braking upgrades.",
-                CreatedAt = new DateTime(2025, 11, 10)
+                CreatedAt = new DateTime(2025, 11, 10),
+                UserProfileId = 1
             }
         );
 
