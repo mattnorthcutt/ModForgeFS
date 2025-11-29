@@ -115,7 +115,7 @@ private ModForgeDbContext _dbContext;
   }
 
   [HttpPut("{id}")]
-  // [Authorize]
+  [Authorize]
   public IActionResult UpdateBuild(int id, Build updatedBuild)
   {
       if (updatedBuild == null || id != updatedBuild.Id)
@@ -153,5 +153,35 @@ private ModForgeDbContext _dbContext;
 
       _dbContext.SaveChanges();
       return NoContent();
+  }
+
+  [HttpDelete("{id}")]
+  [Authorize]
+  public IActionResult DeleteBuild(int id)
+  {
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null)
+    {
+      return Unauthorized();
+    }
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+    if (profile == null)
+    {
+      return Unauthorized();
+    }
+
+    var build = _dbContext.Builds.SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+
+    if (build == null)
+    {
+      return NotFound();
+    }
+
+    _dbContext.Builds.Remove(build);
+    _dbContext.SaveChanges();
+
+    return NoContent();
   }
 }
