@@ -81,4 +81,35 @@ private ModForgeDbContext _dbContext;
     return Ok(build);
   }
 
+  [HttpPost]
+  //[Authorize]
+  public IActionResult CreateBuild(Build build)
+  {
+    if (build == null)
+    {
+      return BadRequest();
+    }
+
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null)
+    {
+      return Unauthorized();
+    }
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+    if (profile == null)
+    {
+      return Unauthorized();
+    }
+
+    build.Id = 0;
+    build.UserProfileId = profile.Id;
+    build.CreatedAt = DateTime.Now;
+
+    _dbContext.Builds.Add(build);
+    _dbContext.SaveChanges();
+
+    return Created($"/api/build/{build.Id}", build);
+  }
 }
