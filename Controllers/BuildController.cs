@@ -22,7 +22,7 @@ private ModForgeDbContext _dbContext;
   }
 
   [HttpGet("mybuilds")]
-  // [Authorize]
+  [Authorize]
   public IActionResult GetMyBuilds()
   {
     var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -55,6 +55,7 @@ private ModForgeDbContext _dbContext;
   }
 
   [HttpGet("{id}")]
+  [Authorize]
   public IActionResult GetBuild(int id)
   {
     var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -82,7 +83,7 @@ private ModForgeDbContext _dbContext;
   }
 
   [HttpPost]
-  //[Authorize]
+  [Authorize]
   public IActionResult CreateBuild(Build build)
   {
     if (build == null)
@@ -111,5 +112,46 @@ private ModForgeDbContext _dbContext;
     _dbContext.SaveChanges();
 
     return Created($"/api/build/{build.Id}", build);
+  }
+
+  [HttpPut("{id}")]
+  // [Authorize]
+  public IActionResult UpdateBuild(int id, Build updatedBuild)
+  {
+      if (updatedBuild == null || id != updatedBuild.Id)
+      {
+          return BadRequest();
+      }
+
+      var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (identityUserId == null)
+      {
+          return Unauthorized();
+      }
+
+      var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+      if (profile == null)
+      {
+          return Unauthorized();
+      }
+
+      var existingBuild = _dbContext.Builds.SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+
+      if (existingBuild == null)
+      {
+          return NotFound();
+      }
+
+      existingBuild.VehicleName = updatedBuild.VehicleName;
+      existingBuild.ImageLocation = updatedBuild.ImageLocation;
+      existingBuild.Goal = updatedBuild.Goal;
+      existingBuild.Status = updatedBuild.Status;
+      existingBuild.StartDate = updatedBuild.StartDate;
+      existingBuild.Budget = updatedBuild.Budget;
+      existingBuild.Notes = updatedBuild.Notes;
+
+      _dbContext.SaveChanges();
+      return NoContent();
   }
 }
