@@ -11,6 +11,8 @@ public class Build
     public decimal Budget { get; set; }
     public string Notes { get; set; }
     public DateTime CreatedAt { get; set; }
+    public int UserProfileId { get; set; }
+    public UserProfile UserProfile{ get; set;}
 
     public List<ModPart> ModParts { get; set; } = new();
 }
