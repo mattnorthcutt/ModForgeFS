@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModForgeFS.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ModForgeFS.Migrations
 {
     [DbContext(typeof(ModForgeDbContext))]
-    partial class ModForgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251125010355_SeededDataAndModelsAndDTOs")]
+    partial class SeededDataAndModelsAndDTOs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,13 +152,13 @@ namespace ModForgeFS.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e149b37d-2994-4144-ad4e-b5356cae99dd",
+                            ConcurrencyStamp = "7e5aaf76-7ce5-454c-8da8-ba76871d91fc",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEOJb69mdDRM52tjz+C2mTIdNhm1Kr/D2VXafVfvubb1XGuCe8J6Kktwfr1CtV+RXNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFsibfqXpmRNGZOL91Bs94ifPm2LGbBtd7BhQ48NMS47EgY1QC1q2dZrakTyKONPrw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aeb8de23-5d72-4d67-93b2-99f60b743e3d",
+                            SecurityStamp = "dfc94bf6-5291-4b52-9e08-6775c1089ca8",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -282,16 +285,11 @@ namespace ModForgeFS.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserProfileId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("VehicleName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Builds");
 
@@ -306,7 +304,6 @@ namespace ModForgeFS.Migrations
                             Notes = "Intake, exhaust, tune first.",
                             StartDate = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "In Progress",
-                            UserProfileId = 1,
                             VehicleName = "2014 Mustang GT"
                         },
                         new
@@ -319,7 +316,6 @@ namespace ModForgeFS.Migrations
                             Notes = "Suspension and braking upgrades.",
                             StartDate = new DateTime(2025, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Planned",
-                            UserProfileId = 1,
                             VehicleName = "2006 Yamaha R6"
                         });
                 });
@@ -597,17 +593,6 @@ namespace ModForgeFS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ModForgeFS.Models.Build", b =>
-                {
-                    b.HasOne("ModForgeFS.Models.UserProfile", "UserProfile")
-                        .WithMany()
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("ModForgeFS.Models.ModPart", b =>

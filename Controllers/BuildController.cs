@@ -1,0 +1,84 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ModForgeFS.Data;
+using Microsoft.EntityFrameworkCore;
+using ModForgeFS.Models;
+using ModForgeFS.Models.DTOs;
+using System.Security.Claims;
+
+namespace ModForgeFS.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+
+public class BuildController : ControllerBase
+{
+  
+private ModForgeDbContext _dbContext;
+
+  public BuildController(ModForgeDbContext context)
+  {
+    _dbContext = context;
+  }
+
+  [HttpGet("mybuilds")]
+  // [Authorize]
+  public IActionResult GetMyBuilds()
+  {
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null)
+    {
+      return Unauthorized();
+    }
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+    if (profile == null)
+    {
+      return Unauthorized();
+    }
+
+    var builds = _dbContext.Builds.Where(b => b.UserProfileId == profile.Id).Select(b => new BuildDTO
+    {
+      Id = b.Id,
+      VehicleName = b.VehicleName,
+      ImageLocation = b.ImageLocation,
+      Goal = b.Goal,
+      Status = b.Status,
+      StartDate = b.StartDate,
+      Budget = b.Budget,
+      Notes = b.Notes,
+      CreatedAt = b.CreatedAt
+    }).ToList();
+
+    return Ok(builds);
+  }
+
+  [HttpGet("{id}")]
+  public IActionResult GetBuild(int id)
+  {
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null)
+    {
+      return Unauthorized();
+    }
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+    if (profile == null)
+    {
+      return Unauthorized();
+    }
+
+    var build = _dbContext.Builds.Include(b => b.ModParts)
+      .Include(b => b.ModParts).ThenInclude(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+
+      if (build == null)
+    {
+      return NotFound();
+    }
+
+    return Ok(build);
+  }
+
+}
