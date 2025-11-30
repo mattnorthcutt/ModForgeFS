@@ -128,4 +128,55 @@ public class ModPartController : ControllerBase
     return NoContent();
   }
 
+  [HttpPost("{id}/tags")]
+  [Authorize]
+  public IActionResult SetTagsForModPart(int id, List<int> tagIds)
+  {
+    if (tagIds == null)
+    {
+      return BadRequest();
+    }
+
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null)
+    {
+      return Unauthorized();
+    }
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+    if (profile == null)
+    {
+      return Unauthorized();
+    }
+
+    var modPart = _dbContext.ModParts.Include(mp => mp.Build).SingleOrDefault(mp => mp.Id == id && mp.Build.UserProfileId == profile.Id);
+
+    if (modPart == null)
+    {
+      return NotFound();
+    }
+
+    var existingModTags = _dbContext.ModTags.Where(mt => mt.ModPartId == id).ToList();
+
+    if (existingModTags.Any())
+    {
+      _dbContext.ModTags.RemoveRange(existingModTags);
+    }
+
+    foreach (var tagId in tagIds)
+    {
+      var modTag = new ModTag
+      {
+        ModPartId = id,
+        TagId = tagId
+      };
+
+      _dbContext.ModTags.Add(modTag);
+    }
+
+    _dbContext.SaveChanges();
+
+    return NoContent();
+  }
 }
