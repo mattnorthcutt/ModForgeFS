@@ -120,27 +120,27 @@ private ModForgeDbContext _dbContext;
   {
       if (updatedBuild == null || id != updatedBuild.Id)
       {
-          return BadRequest();
+        return BadRequest();
       }
 
       var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
       if (identityUserId == null)
       {
-          return Unauthorized();
+        return Unauthorized();
       }
 
       var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
 
       if (profile == null)
       {
-          return Unauthorized();
+        return Unauthorized();
       }
 
       var existingBuild = _dbContext.Builds.SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
 
       if (existingBuild == null)
       {
-          return NotFound();
+        return NotFound();
       }
 
       existingBuild.VehicleName = updatedBuild.VehicleName;
