@@ -3,6 +3,7 @@ import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import BuildList from "./builds/BuildList";
+import BuildDetails from "./builds/BuildDetails";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -17,6 +18,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             </AuthorizedRoute>
           }
         />
+
+        <Route 
+          path="builds/:id"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <BuildDetails loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+        
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}

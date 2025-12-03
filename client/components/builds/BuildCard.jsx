@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function BuildCard({ build }) {
   return (
     <div className="build-card">
@@ -20,7 +22,12 @@ export default function BuildCard({ build }) {
           {build.notes}
         </p>
 
-        
+        <div className="build-card-buttons">
+          <Link to={`/builds/${build.id}`} className="btn btn-sm btn-primary">
+            View Details
+          </Link>
+        </div>
+
       </div>
     </div>
   )
