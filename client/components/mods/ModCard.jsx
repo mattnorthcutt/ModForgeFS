@@ -1,10 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
 export default function ModCard({ modPart }) {
+  const navigate = useNavigate()
+
   if (!modPart) {
     return null;
   }
 
   return (
     <div className="modpart-card">
+      <button className="btn btn-secondary" onClick={() => navigate(`/mods/edit/${modPart.id}`)}>
+        Edit
+      </button>
       <div className="modpart-card-h">
         <h4 className="modpart-title">{modPart?.modName}</h4>
         <p className="modpart-brand">

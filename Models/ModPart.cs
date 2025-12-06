@@ -9,7 +9,7 @@ public class ModPart
     public required string ModName { get; set; }
     public required string ModType { get; set; }
     public decimal Cost { get; set; }
-    public DateTime InstallDate { get; set; }
+    public DateTime? InstallDate { get; set; }
     public required string Link { get; set; }
     public required string Notes { get; set; }
     public DateTime CreatedAt { get; set; }
