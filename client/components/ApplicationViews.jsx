@@ -6,6 +6,8 @@ import BuildList from "./builds/BuildList";
 import BuildDetails from "./builds/BuildDetails";
 import BuildForm from "./builds/BuildForm";
 import EditBuildForm from "./builds/EditBuildForm";
+import ModPartForm from "./mods/ModPartForm";
+import EditModPartForm from "./mods/EditModPartForm";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -44,6 +46,24 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <EditBuildForm loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+
+        <Route
+          path="builds/:id/mods/new"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <ModPartForm loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+
+        <Route
+          path="mods/edit/:id"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <EditModPartForm loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
         />

@@ -179,4 +179,31 @@ public class ModPartController : ControllerBase
 
     return NoContent();
   }
+
+  [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetModPartById(int id)
+    {
+        var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (identityUserId == null)
+        {
+            return Unauthorized();
+        }
+        
+        var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+
+        if (profile == null)
+        {
+            return Unauthorized();
+        }
+
+        var mod = _dbContext.ModParts.Include(m => m.Build).SingleOrDefault(m => m.Id == id && m.Build.UserProfileId == profile.Id);
+
+        if (mod == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(mod);
+    }
 }

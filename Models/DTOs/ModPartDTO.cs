@@ -8,7 +8,7 @@ public class ModPartDTO
     public string ModName { get; set; }
     public string ModType { get; set; }
     public decimal Cost { get; set; }
-    public DateTime InstallDate { get; set; }
+    public DateTime? InstallDate { get; set; }
     public string Link { get; set; }
     public string Notes { get; set; }
     public DateTime CreatedAt { get; set; }

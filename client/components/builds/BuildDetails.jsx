@@ -65,6 +65,9 @@ export default function BuildDetails() {
       <div className="build-details-mods">
         <div className="build-details-mods-h">
           <h3>Mod Parts for your {build.vehicleName}</h3>
+          <Link to={`/builds/${build.id}/mods/new`}className="btn btn-primary">
+            + Add Mod Part
+          </Link>
         </div>
 
         <div className="build-details-mods-list">
