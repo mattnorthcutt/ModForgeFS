@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getBuildbyId } from "../../managers/buildManager";
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
@@ -16,7 +16,20 @@ export default function BuildDetails() {
   }
 
   return (
+    
+
     <div className="build-details">
+
+      <div className="build-details-footer">
+        <Link to="/" className="btn btn-secondary">
+          Back to My Builds
+        </Link>
+
+        <Link to={`/builds/edit/${build.id}`} className="btn btn-primary">
+          Edit Build
+        </Link>
+      </div>
+
       <div className="build-details-h">
         <div className="build-details-buildinfo">
           <h2>{build.vehicleName}</h2>
