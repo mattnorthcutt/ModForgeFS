@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function ModCard({ modPart }) {
+export default function ModCard({ modPart, onDelete }) {
   const navigate = useNavigate()
 
   if (!modPart) {
@@ -11,6 +11,9 @@ export default function ModCard({ modPart }) {
     <div className="modpart-card">
       <button className="btn btn-secondary" onClick={() => navigate(`/mods/edit/${modPart.id}`)}>
         Edit
+      </button>
+      <button className="btn btn-danger" onClick={() => onDelete(modPart.id)}>
+        Delete
       </button>
       <div className="modpart-card-h">
         <h4 className="modpart-title">{modPart?.modName}</h4>
