@@ -29,3 +29,10 @@ export const updateBuild = (id, build) => {
     body: JSON.stringify(build),
   });
 };
+
+export const deleteBuild = (id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: "DELETE",
+    credentials: "same-origin",
+  })
+}
