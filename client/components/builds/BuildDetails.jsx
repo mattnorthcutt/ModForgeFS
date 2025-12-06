@@ -2,6 +2,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { getBuildbyId, deleteBuild } from "../../managers/buildManager";
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
+import { deleteModPart } from "../../managers/modManager";
 
 export default function BuildDetails() {
   const { id } = useParams();
@@ -26,6 +27,20 @@ export default function BuildDetails() {
 
     deleteBuild(build.id).then(() => {
       navigate("/")
+    })
+  }
+
+  const handleDeleteMod = (modId) => {
+    const gettingDeleted = window.confirm(
+      "Are you sure you want to delete this mod part?"
+    )
+
+    if (!gettingDeleted) {
+      return;
+    }
+
+    deleteModPart(modId).then(() => {
+      getBuildbyId(id).then(setBuild)
     })
   }
 
@@ -73,7 +88,7 @@ export default function BuildDetails() {
         <div className="build-details-mods-list">
           {build.modParts && build.modParts.length > 0 ? (
             build.modParts.map((mp) => (
-              <ModCard key={mp.id} modPart={mp} />
+              <ModCard key={mp.id} modPart={mp} onDelete={handleDeleteMod}/>
               ))
             ) : (
             <p>No mods</p>
