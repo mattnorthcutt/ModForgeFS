@@ -4,6 +4,8 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import BuildList from "./builds/BuildList";
 import BuildDetails from "./builds/BuildDetails";
+import BuildForm from "./builds/BuildForm";
+import EditBuildForm from "./builds/EditBuildForm";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -28,6 +30,24 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           }
         />
         
+        <Route
+          path="builds/new"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <BuildForm loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+
+        <Route
+          path="builds/edit/:id"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <EditBuildForm loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}

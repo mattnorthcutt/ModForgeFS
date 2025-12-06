@@ -7,3 +7,25 @@ export const getMyBuilds = () => {
 export const getBuildbyId = (id) => {
   return fetch(`${_apiUrl}/${id}`).then((res) => res.json())
 }
+
+export const createBuild = (build) => {
+  return fetch(_apiUrl, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(build),
+  }).then((res) => res.json());
+};
+
+export const updateBuild = (id, build) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(build),
+  });
+};
