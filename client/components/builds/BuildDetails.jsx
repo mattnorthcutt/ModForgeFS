@@ -1,10 +1,11 @@
-import { Link, useParams } from "react-router-dom";
-import { getBuildbyId } from "../../managers/buildManager";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getBuildbyId, deleteBuild } from "../../managers/buildManager";
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
 
 export default function BuildDetails() {
   const { id } = useParams();
+  const navigate = useNavigate()
   const [build, setBuild] = useState(null);
 
   useEffect(() => {
@@ -15,12 +16,25 @@ export default function BuildDetails() {
     return <p>No Build</p>
   }
 
+  const handleDelete = () => {
+    const gettingDeleted = window.confirm(
+      "Are you sure you want to delete this build?"
+    )
+    if (!gettingDeleted) {
+      return 
+    }
+
+    deleteBuild(build.id).then(() => {
+      navigate("/")
+    })
+  }
+
   return (
     
 
     <div className="build-details">
 
-      <div className="build-details-footer">
+      <div className="build-details-buttons">
         <Link to="/" className="btn btn-secondary">
           Back to My Builds
         </Link>
@@ -28,6 +42,10 @@ export default function BuildDetails() {
         <Link to={`/builds/edit/${build.id}`} className="btn btn-primary">
           Edit Build
         </Link>
+
+        <button onClick={handleDelete} className="btn btn-danger">
+          Delete Your Build
+        </button>
       </div>
 
       <div className="build-details-h">
