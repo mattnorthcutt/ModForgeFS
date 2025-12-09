@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { createModPart } from "../../managers/modManager";
+import { createModPart, setTagsForModPart } from "../../managers/modManager";
 import { MOD_TYPES, BRANDS } from "./modOptions";
+import { createTag, deleteTag, getAllTags, updateTag } from "../../managers/tagManager";
 
 export default function ModPartForm() {
   const navigate = useNavigate()
@@ -16,6 +17,14 @@ export default function ModPartForm() {
     link: "",
     notes: "",
   })
+
+  const [availableTags, setAvailableTags] = useState([])
+  const [selectedTagIds, setSelectedTagIds] = useState([])
+  const [newTagName, setNewTagName] = useState("")
+
+  useEffect(() => {
+    getAllTags().then(setAvailableTags)
+  }, [])
 
   const handleChange = (event) => {
       const { name, value } = event.target;
@@ -45,7 +54,52 @@ export default function ModPartForm() {
       }
     })
   }
+
+  const handleTagCheckbox = (tagId) => {
+    setSelectedTagIds((prev) => 
+      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+    )
+  }
+
+  const handleAddTag = (event) => {
+    event.preventDefault()
+
+    const trimmedTag = newTagName.trim();
+    if(!trimmedTag)return
+
+    createTag(trimmedTag).then((created) => {
+      setAvailableTags((prev) => [...prev, created])
+      setSelectedTagIds((prev) => [...prev, created.id])
+      setNewTagName("")
+    })
+  }
+
+  const handleEditTag = (tag) => {
+    const newName = window.prompt("Edit Tag Name", tag.name)
+    if (!newName) return
+
+    const trimmedTag = newName.trim();
+    if (!trimmedTag) return
+
+    updateTag(tag.id, { id: tag.id, name: trimmedTag }).then(() => {
+      setAvailableTags((prev) => 
+        prev.map((t) => (t.id === tag.id ? { ...t, name: trimmedTag } : t))
+      )
+    })
+  }
   
+  const handleDeleteTag = (tagId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this tag?"
+    )
+    if (!confirmDelete) return
+
+    deleteTag(tagId).then(() => {
+      setAvailableTags((prev) => prev.filter((t) => t.id !== tagId))
+      setSelectedTagIds((prev) => prev.filter((id) => id !== tagId))
+    })
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault(); 
 
@@ -60,7 +114,13 @@ export default function ModPartForm() {
       notes: formField.notes,
     }
   
-    createModPart(modFields).then(() => {
+    createModPart(modFields).then((created) => {
+      if (!created || !created.id) return
+
+      if (selectedTagIds.length === 0) return
+
+      return setTagsForModPart(created.id, selectedTagIds)
+    }).then(() => {
       navigate(`/builds/${id}`)
     })
   };
@@ -111,6 +171,49 @@ export default function ModPartForm() {
                   {type}
                 </label>
               ))}
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Tags</label>
+            <div className="checkbox-group">
+              {availableTags.map((tag) => (
+                <label key={tag.id} className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedTagIds.includes(tag.id)}
+                    onChange={() => handleTagCheckbox(tag.id)}
+                  />
+                  {tag.name}
+                  <div className="tag-actions">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => handleEditTag(tag)}>
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDeleteTag(tag.id)}>
+                    Delete
+                  </button>
+                </div>
+                </label>
+              ))}
+            </div>
+            
+
+            <div className="inline-tag-form">
+              <input
+                type="text"
+                placeholder="Add New Tag"
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+              />
+              <button type="button" onClick={handleAddTag}>
+                Add Tag
+              </button>
             </div>
           </div>
 

@@ -79,6 +79,12 @@ public class TagController : ControllerBase
     var tag = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
     if (tag == null) return NotFound();
 
+    var modTags = _dbContext.ModTags.Where(mt => mt.TagId == id).ToList();
+    if (modTags.Any())
+    {
+      _dbContext.ModTags.RemoveRange(modTags);
+    }
+
     _dbContext.Tags.Remove(tag);
     _dbContext.SaveChanges();
 

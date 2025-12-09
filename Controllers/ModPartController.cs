@@ -128,9 +128,9 @@ public class ModPartController : ControllerBase
     return NoContent();
   }
 
-  [HttpPost("{id}/tags")]
+  [HttpPut("{id}/tags")]
   [Authorize]
-  public IActionResult SetTagsForModPart(int id, List<int> tagIds)
+  public IActionResult SetTagsForModPart(int id, [FromBody] List<int> tagIds)
   {
     if (tagIds == null)
     {
@@ -180,7 +180,7 @@ public class ModPartController : ControllerBase
     return NoContent();
   }
 
-  [HttpGet("{id}")]
+    [HttpGet("{id}")]
     [Authorize]
     public IActionResult GetModPartById(int id)
     {
