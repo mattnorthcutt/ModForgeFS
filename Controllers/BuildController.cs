@@ -71,8 +71,7 @@ private ModForgeDbContext _dbContext;
       return Unauthorized();
     }
 
-    var build = _dbContext.Builds.Include(b => b.ModParts)
-      .Include(b => b.ModParts).ThenInclude(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+    var build = _dbContext.Builds.Include(b => b.ModParts).ThenInclude(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
 
       if (build == null)
     {
@@ -184,4 +183,6 @@ private ModForgeDbContext _dbContext;
 
     return NoContent();
   }
+
+  
 }

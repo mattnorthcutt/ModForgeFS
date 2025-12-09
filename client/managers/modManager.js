@@ -32,3 +32,14 @@ export const deleteModPart = (id) => {
     credentials: "same-origin",
   });
 };
+
+export const setTagsForModPart = (modPartId, tagIds) => {
+  return fetch(`${_apiUrl}/${modPartId}/tags`, {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tagIds),
+  })
+}
