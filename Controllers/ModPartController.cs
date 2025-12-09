@@ -197,7 +197,7 @@ public class ModPartController : ControllerBase
             return Unauthorized();
         }
 
-        var mod = _dbContext.ModParts.Include(m => m.Build).SingleOrDefault(m => m.Id == id && m.Build.UserProfileId == profile.Id);
+        var mod = _dbContext.ModParts.Include(m => m.Build).Include(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(m => m.Id == id && m.Build.UserProfileId == profile.Id);
 
         if (mod == null)
         {
