@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { createModPart, setTagsForModPart } from "../../managers/modManager";
 import { MOD_TYPES, BRANDS } from "./modOptions";
 import { createTag, deleteTag, getAllTags, updateTag } from "../../managers/tagManager";
+import { FiArrowLeftCircle, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 export default function ModPartForm() {
   const navigate = useNavigate()
@@ -127,8 +128,10 @@ export default function ModPartForm() {
 
     return (
       <div className="mod-form">
+        <button className="modcardbtn btn btn-secondary" onClick={() => navigate(`/builds/${id}`)}>
+            <FiArrowLeftCircle />
+          </button>
         <h2>Add Mod Part</h2>
-
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
@@ -143,8 +146,8 @@ export default function ModPartForm() {
           </div>
 
           <div className="form-group">
-            <label>Brands</label>
-            <div className="checkbox-group">
+            <div className="form-section-title">Brands</div>
+            <div className="checkbox-group checkbox-group-brands">
               {BRANDS.map((brand) => (
                 <label key={brand} className="checkbox-item">
                   <input
@@ -152,15 +155,15 @@ export default function ModPartForm() {
                     checked={formField.selectedBrands.includes(brand)}
                     onChange={() => handleBrandCheckbox(brand)}
                   />
-                  {brand}
+                  <span className="checkbox-label-text">{brand}</span>
                 </label>
               ))}
             </div>
           </div>
 
           <div className="form-group">
-            <label>Mod Types</label>
-            <div className="checkbox-group">
+            <div className="form-section-title">Mod Types</div>
+            <div className="checkbox-group checkbox-group-modtypes">
               {MOD_TYPES.map((type) => (
                 <label key={type} className="checkbox-item">
                   <input
@@ -168,15 +171,15 @@ export default function ModPartForm() {
                     checked={formField.selectedTypes.includes(type)}
                     onChange={() => handleTypeCheckbox(type)}
                   />
-                  {type}
+                  <span className="checkbox-label-text">{type}</span>
                 </label>
               ))}
             </div>
           </div>
 
           <div className="form-group">
-            <label>Tags</label>
-            <div className="checkbox-group">
+            <div className="form-section-title">Tags</div>
+            <div className="checkbox-group checkbox-group-tags">
               {availableTags.map((tag) => (
                 <label key={tag.id} className="checkbox-item">
                   <input
@@ -184,19 +187,19 @@ export default function ModPartForm() {
                     checked={selectedTagIds.includes(tag.id)}
                     onChange={() => handleTagCheckbox(tag.id)}
                   />
-                  {tag.name}
+                  <span className="checkbox-label-text">{tag.name}</span>
                   <div className="tag-actions">
                   <button
                     type="button"
                     className="btn btn-sm btn-secondary"
                     onClick={() => handleEditTag(tag)}>
-                    Edit
+                    <FiEdit2 />
                   </button>
                   <button
                     type="button"
                     className="btn btn-sm btn-danger"
                     onClick={() => handleDeleteTag(tag.id)}>
-                    Delete
+                    <FiTrash2 />
                   </button>
                 </div>
                 </label>

@@ -65,7 +65,9 @@ export default function BuildDetails() {
 
       <div className="build-details-h">
         <div className="build-details-buildinfo">
-          <h2>{build.vehicleName}</h2>
+          <div className="build-details-title">
+            <h2>{build.vehicleName}</h2>
+          </div>
           <p><strong>Goal:</strong> {build.goal} </p>
           <p><strong>Status:</strong> {build.status} </p>
           <p><strong>Budget:</strong> ${build.budget.toLocaleString()} </p>

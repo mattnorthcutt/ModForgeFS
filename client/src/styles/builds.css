@@ -1,0 +1,165 @@
+/* Build List Page Styling */
+
+/* Container for my build list. Centering the content and limiting the max width to not let it stretch too far */
+.build-list {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* My main heading on the build list page. Made it left aligned with a slight margin at the bottom */
+.build-list > h2 {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+/* My layout for the build cards use a grid so the cards wrap nicely and responsive colums with minimax and a slight gap between cards. */
+.build-list-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem !important;
+  padding-bottom: 2rem;
+}
+
+/* Build Card Styling */
+
+/* My individual card for builds with a dark surface background, rounded corners a soft shadow and a vertical layout for image + body */
+.build-card {
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid var(--color-border);
+}
+
+/* Our build image with a full width and a fixed hight and also an object fit to keep aspect ratio while filling the box */
+.build-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Our text and body area inside the card with padding for better spacing */
+.build-card-body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+/* Our vehicle name with a slightly larger font and no extra margin at the top */
+.build-card-title {
+  color: var(--color-text);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+/* Our goal text with a certain font size and the colors muted with one of our color variables. */
+.build-card-goal {
+  font-size: 1rem;
+  color: var(--color-muted);
+  margin: 0 0 0.4rem 0;
+}
+
+/* Our status line with a font size a margin for spacing and a muted color */
+.build-card-status {
+  font-size: 0.9rem;
+  margin: 0 0 0.4rem 0;
+  color: var(--color-muted);
+}
+
+/* Our budget line. Same as status */ 
+.build-card-budget {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.4rem 0;
+}
+
+/* Our short notes text with a smaller font and muted color. */
+.build-card-notes {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin: 0.4rem 0 0;
+  padding-bottom: 15px;
+}
+
+/* Build detail layout styling */
+
+/* Overall container for the whole build details page. We make the content center and add vertical spacing for everything */
+.build-details {
+  max-width: 1200px;
+  margin: 0 auto 48px auto;
+}
+
+/* This is for our back,edit,delete buttons on our detailks page. We have a horizontal layout with gaps and we align to right on wider screens */
+.build-details-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* We made a horizontal layout for build info and image side by side. Info left and image right */
+.build-details-h {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+/* This is my text info for the build/all the info. Has a slight padding and rounded border to look like an actual card. */
+.build-details-buildinfo {
+  flex: 1;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-muted);
+}
+
+.build-details-title {
+  color: var(--color-text);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 5px;
+}
+
+/* Has our image container on the right. Is slightly narrower for text to have more room */
+.build-details-image {
+  width: 40%;
+  max-width: 420px;
+}
+
+/* Our actual image on our details page. We cover the container, rounded corners, and a border for definition. */
+.build-details-image img {
+  width: 100%;
+  border-radius: 8px;
+  height: auto;
+  max-height: 300px; 
+  border: 1px solid var(--color-border);
+  object-fit: cover;
+}
+
+/* Mod Parts Section on our Build Details */
+
+/* Container for our Mods Section */
+.build-details-mods {
+  margin: 2rem;
+}
+
+/* Our header for our mods section. have the title on the left and add mod button on the right */
+.build-details-mods-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Our layout for the mod cards inside our build details. We got a grid layout with two columns on larger screens. */
+.build-details-mods-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}

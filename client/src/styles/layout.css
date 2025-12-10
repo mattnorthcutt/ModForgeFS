@@ -1,0 +1,83 @@
+/* My app shell and my Main Layout for my application */
+
+/* makes it so navbar is on top and my main content is below. my app shell wraps my main content and my navbar */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.page-container {
+  margin: 0 auto;
+  padding: 2rem 2.5rem 3rem;
+  max-width: 1200px;
+  text-align: left;
+}
+
+.main-content {
+  padding-top: 80px;
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid !important;
+  flex-direction: column;
+}
+
+/* NavBar Styling */
+
+/* Our custom NavBar class applied on our NavBar. Has a fixed top position, a dark bg, bottom border for seperation, z-index so it sits above the page content*/
+.mf-navbar {
+  background-color: #000000;
+  border-bottom: 1px solid var(--color-border);
+  padding: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Brand and Logo text on the left side. Has white text, a slight letter spacing bc i like it lol, and bold to stand out. */
+.navbar-logo {
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing:  0.08em;
+  text-transform: uppercase;
+}
+
+/* Container for navigation links. Has a displa flex so items line up horizontally, and a gap for spacing between items. */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Right section of the navbar with my logout or login button. Have a margin left that auto pushes it to the far right. a gap for good spacing, also aligning it to the center and make sure its lined up horizntally with display flex. */
+.navbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* A base style for my buttons in my NavBar. A transparent bg by default with a white text and slightly round corners. */
+.nav-button {
+  background-color: transparent;
+  border-radius: 999px;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Filled variant for primary actions in my nav with a dark red bg and no extra border */
+.nav-button-filled {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Outline variant used for my Logout and Login with a transparent bg and red bored with red text on hover */
+.nav-button-outline {
+  background-color: transparent;
+  border-color: var(--color-accent);
+}

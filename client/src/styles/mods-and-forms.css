@@ -1,0 +1,260 @@
+/* ModPart Card Styling */
+
+/* Our wrapper for each mod card. Has a dark surface bg with rounded corners and a box shadow */
+.modpart-card {
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  max-width: 450px;
+}
+
+/* Container for the mod title and brand in a row */
+.modpart-card-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.modpart-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.modpart-brand {
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0.25rem 0;
+  color: var(--color-muted);
+}
+
+.modpart-card-body {
+  margin-bottom: 0.4rem;
+}
+
+.modpart-type {
+  font-size: 0.9rem;
+   margin: 0.4rem 0 0.25rem 0;
+  color: var(--color-muted);
+}
+
+.modpart-cost {
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0.25rem 0;
+  color: var(--color-muted);
+}
+
+.modpart-notes {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin: 0 0 0.75rem 0;
+}
+
+/* Container for all tag pills under a mod. Horizontal flex with wrapping */
+.modpart-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Tag pill used for each tag. Rounded pill shape with an accent background */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+  font-size: 0.75rem;
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+/* For no tags just makes it an empty gray state */
+.tag-pill-empty {
+  background-color: #33353f;
+  color: var(--color-muted);
+}
+
+/* Build and Mod Forms */
+
+/* We share a container for build forms and mod forms. We style .build-form and .mod-form the same. */
+.build-form,
+.mod-form {
+  max-width: 700px;
+  margin: 0 auto 48px auto;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+
+/* form headings */
+.build-form h2,
+.mod-form h2 {
+  color: var(--color-text);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Our generic group for labels and inputs. Adds vertical spacing between fields */
+.form-group {
+  margin-bottom: 0.9rem;
+}
+
+/* Labels in forms. With it being slightly bold and left aligned */
+.form-group label {
+  color: var(--color-muted);
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* Our basic input/textarea/select styling inside our forms. It has full width, a dark background, a light border, and rounded corners all applied */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  background-color: #181a20;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+/* 
+  Heading for subsections like "Brands", "Mod Types", "Tags".
+  - Slightly larger than normal label
+  - Extra spacing above/below so it feels like a section header
+*/
+.form-section-title {
+  color: var(--color-muted);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+/* Make textarea a bit taller by default. */
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Our submit buttons. We use .btn.btn-primary from Bootstrap but override the colors. */
+.btn.btn-primary {
+  background-color: var(--color-border);
+  border-color: var(--color-muted);
+  border-radius: 999px;
+  padding: 0.4rem 1.25rem;
+}
+
+/* Container for our Checkboxes */
+
+/* Container for groups of checkboxes. We have a flex and wrap which allows multiple per row */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+}
+
+/* Individual checkbox and label. */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+/* Inline tag form which is our small add tag field. */
+.inline-tag-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+/* Input inside the inline tag form. */
+.inline-tag-form input {
+  flex: 1;
+  background-color: #181a20;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* Button inside inline tag form. */
+.inline-tag-form button {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-accent);
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.checkbox-group {
+  display: grid;
+  gap: 0.35rem 1rem; /* row gap, column gap */
+}
+
+.checkbox-group-brands {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+
+.checkbox-group-modtypes {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+}
+
+.checkbox-group-tags {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--color-muted);
+}
+
+.checkbox-label-text {
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+/* Container for my icons */
+.tag-actions {
+  display: flex;
+  gap: 0.35rem;
+  margin-left: 0.4rem;
+}
+
+/* Base icon button style */
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: 0.15s ease-in-out;
+}
+
+/* Icon size and base color */
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+}
