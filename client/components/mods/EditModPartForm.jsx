@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getModPartById, setTagsForModPart, updateModPart } from "../../managers/modManager";
 import { BRANDS, MOD_TYPES } from "./modOptions";
 import { createTag, deleteTag, getAllTags, updateTag } from "../../managers/tagManager";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
 export default function EditModPartForm() {
   const navigate = useNavigate()
@@ -83,7 +84,7 @@ export default function EditModPartForm() {
     const trimmedTag = newTagName.trim();
     if(!trimmedTag)return
 
-    createTag({ name: trimmedTag }).then((created) => {
+    createTag(trimmedTag).then((created) => {
       setAvailableTags((prev) => [...prev, created])
       setSelectedTagIds((prev) => [...prev, created.id])
       setNewTagName("")
@@ -159,8 +160,8 @@ export default function EditModPartForm() {
         </div>
 
         <div className="form-group">
-          <label>Brands</label>
-          <div className="checkbox-group">
+          <div className="form-section-title">Brands</div>
+          <div className="checkbox-group checkbox-group-brands">
             {BRANDS.map((brand) => (
               <label key={brand} className="checkbox-item">
                 <input
@@ -168,15 +169,15 @@ export default function EditModPartForm() {
                   checked={formField.selectedBrands.includes(brand)}
                   onChange={() => handleBrandCheckbox(brand)}
                 />
-                {brand}
+                <span className="checkbox-label-text">{brand}</span>
               </label>
             ))}
           </div>
         </div>
 
         <div className="form-group">
-          <label>Mod Types</label>
-          <div className="checkbox-group">
+          <div className="form-section-title">Mod Types</div>
+          <div className="checkbox-group checkbox-group-modtypes">
             {MOD_TYPES.map((type) => (
               <label key={type} className="checkbox-item">
                 <input
@@ -184,15 +185,15 @@ export default function EditModPartForm() {
                   checked={formField.selectedTypes.includes(type)}
                   onChange={() => handleTypeCheckbox(type)}
                 />
-                {type}
+                <span className="checkbox-label-text">{type}</span>
               </label>
             ))}
           </div>
         </div>
 
         <div className="form-group">
-          <label>Tags</label>
-          <div className="checkbox-group">
+          <div className="form-section-title">Tags</div>
+          <div className="checkbox-group checkbox-group-modtypes">
             {availableTags.map((tag) => (
               <div key={tag.id} className="checkbox-item tag-row">
                 <label>
@@ -201,21 +202,25 @@ export default function EditModPartForm() {
                     checked={selectedTagIds.includes(tag.id)}
                     onChange={() => handleTagCheckbox(tag.id)}
                   />
-                  {tag.name}
+                  <span className="checkbox-label-text">{tag.name}</span>
                 </label>
                 <div className="tag-actions">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-secondary"
-                    onClick={() => handleEditTag(tag)}>
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDeleteTag(tag.id)}>
-                    Delete
-                  </button>
+                  <div className="tag-pill-btn">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-secondary"
+                      onClick={() => handleEditTag(tag)}>
+                      <FiEdit2 />
+                    </button>
+                  </div>
+                  <div className="tag-pill-btn">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-danger"
+                      onClick={() => handleDeleteTag(tag.id)}>
+                      <FiTrash2 />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

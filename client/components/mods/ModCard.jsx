@@ -1,3 +1,4 @@
+import { FiEdit, FiTrash } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function ModCard({ modPart, onDelete }) {
@@ -9,19 +10,18 @@ export default function ModCard({ modPart, onDelete }) {
 
   return (
     <div className="modpart-card">
-      <button className="btn btn-secondary" onClick={() => navigate(`/mods/edit/${modPart.id}`)}>
-        Edit
+      <button className="modcardbtn btn btn-secondary" onClick={() => navigate(`/mods/edit/${modPart.id}`)}>
+        <FiEdit />
       </button>
-      <button className="btn btn-danger" onClick={() => onDelete(modPart.id)}>
-        Delete
+      <button className="modcardbtn btn btn-danger" onClick={() => onDelete(modPart.id)}>
+        <FiTrash />
       </button>
       <div className="modpart-card-h">
         <h4 className="modpart-title">{modPart?.modName}</h4>
+      </div>
         <p className="modpart-brand">
           <strong>Brand:</strong> {modPart?.brand}
         </p>
-      </div>
-
       <div className="modpart-card-body">
         <p className="modpart-type">
           <strong>Type:</strong> {modPart?.modType}

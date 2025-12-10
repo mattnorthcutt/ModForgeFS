@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/layout.css";
+import "./styles/builds.css";
+import "./styles/mods-and-forms.css";
 import { tryGetLoggedInUser } from "../managers/authManager";
 import { Spinner } from "reactstrap";
 import NavBar from "../components/NavBar";
@@ -22,13 +25,16 @@ function App() {
   }
 
   return (
-    <>
+    <div className="app-shell">
       <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
-      <ApplicationViews
-        loggedInUser={loggedInUser}
-        setLoggedInUser={setLoggedInUser}
-      />
-    </>
+
+      <main className="main-content">
+        <ApplicationViews
+          loggedInUser={loggedInUser}
+          setLoggedInUser={setLoggedInUser}
+        />
+      </main>
+    </div>
   );
 }
 
