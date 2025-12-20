@@ -3,9 +3,8 @@ import { getBuildbyId, deleteBuild, updateBuildVisibility } from "../../managers
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
 import { deleteModPart } from "../../managers/modManager";
-import { tryGetLoggedInUser } from "../../managers/authManager";
 
-export default function BuildDetails() {
+export default function BuildDetails({ loggedInUser }) {
   const { id } = useParams();
   const navigate = useNavigate()
   const [build, setBuild] = useState(null);
@@ -18,7 +17,11 @@ export default function BuildDetails() {
     return <p>No Build</p>
   }
 
-  const isOwner = tryGetLoggedInUser?.id === build.userProfileId;
+  console.log("loggedInUser:", loggedInUser);
+  console.log("build.userProfileId:", build?.userProfileId);
+  console.log("build.userProfile?.identityUserId:", build?.userProfile?.identityUserId);
+
+  const isOwner = loggedInUser?.id === build.userProfileId;
 
   const budget = Number(build.budget) || 0;
 
