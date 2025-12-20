@@ -8,6 +8,7 @@ import BuildForm from "./builds/BuildForm";
 import EditBuildForm from "./builds/EditBuildForm";
 import ModPartForm from "./mods/ModPartForm";
 import EditModPartForm from "./mods/EditModPartForm";
+import CommunityBuildList from "./builds/CommunityBuildList";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -55,6 +56,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <ModPartForm loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+
+        <Route
+          path="community"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <CommunityBuildList />
             </AuthorizedRoute>
           }
         />

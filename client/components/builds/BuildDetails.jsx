@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { getBuildbyId, deleteBuild } from "../../managers/buildManager";
+import { getBuildbyId, deleteBuild, updateBuildVisibility } from "../../managers/buildManager";
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
 import { deleteModPart } from "../../managers/modManager";
@@ -73,6 +73,17 @@ export default function BuildDetails() {
 
         <button onClick={handleDelete} className="btn btn-danger">
           Delete Your Build
+        </button>
+
+        <button
+          className="btn btn-outline-dark"
+          onClick={() => {
+            const next = !build.isPublic;
+            updateBuildVisibility(build.id, next).then(() => {
+              getBuildbyId(id).then(setBuild);
+            });
+          }}>
+          {build.isPublic ? "Make Private" : "Make Public"}
         </button>
       </div>
 

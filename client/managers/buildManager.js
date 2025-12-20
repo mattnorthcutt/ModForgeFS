@@ -36,3 +36,19 @@ export const deleteBuild = (id) => {
     credentials: "same-origin",
   })
 }
+
+
+export const getPublicBuilds = () => {
+  return fetch(`${_apiUrl}/public`, {
+    credentials: "same-origin",
+  }).then((res) => res.json());
+};
+
+export const updateBuildVisibility = (buildId, isPublic) => {
+  return fetch(`${_apiUrl}/${buildId}/visibility`, {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(isPublic),
+  });
+};

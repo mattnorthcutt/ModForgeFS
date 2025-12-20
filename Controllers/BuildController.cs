@@ -71,14 +71,46 @@ private ModForgeDbContext _dbContext;
       return Unauthorized();
     }
 
-    var build = _dbContext.Builds.Include(b => b.ModParts).ThenInclude(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+    var build = _dbContext.Builds.Include(b => b.ModParts).ThenInclude(mp => mp.ModTags).ThenInclude(mt => mt.Tag).SingleOrDefault(b => b.Id == id);
 
       if (build == null)
     {
       return NotFound();
     }
 
-    return Ok(build);
+    if (build.UserProfileId == profile.Id) return Ok(build);
+
+    if (build.UserProfileId == profile.Id) return Ok(build);
+
+    return Unauthorized();
+  }
+
+  [HttpGet("public")]
+  [Authorize]
+  public IActionResult GetPublicBuilds()
+  {
+    var builds = _dbContext.Builds.Where(b => b.IsPublic).OrderByDescending(b => b.Id).ToList();
+
+    return Ok(builds);
+  }
+
+  [HttpPut("{id}/visibility")]
+  [Authorize]
+  public IActionResult UpdateVisibility(int id, [FromBody] bool isPublic)
+  {
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (identityUserId == null) return Unauthorized();
+
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+    if (profile == null) return Unauthorized();
+
+    var build = _dbContext.Builds.SingleOrDefault(b => b.Id == id && b.UserProfileId == profile.Id);
+    if (build == null) return NotFound();
+
+    build.IsPublic = isPublic;
+    _dbContext.SaveChanges();
+
+    return NoContent();
   }
 
   [HttpPost]

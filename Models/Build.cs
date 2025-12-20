@@ -13,6 +13,6 @@ public class Build
     public DateTime CreatedAt { get; set; }
     public int UserProfileId { get; set; }
     public UserProfile? UserProfile{ get; set;}
-
+    public bool IsPublic { get; set; } = false;
     public List<ModPart> ModParts { get; set; } = new();
 }
