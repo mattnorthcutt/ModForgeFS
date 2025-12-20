@@ -17,6 +17,19 @@ export default function BuildDetails() {
     return <p>No Build</p>
   }
 
+  const budget = Number(build.budget) || 0;
+
+  const totalSpent = (build.modParts || []).reduce((sum, mp) => {
+    const cost = Number(mp.cost) || 0;
+    return sum + cost;
+  }, 0);
+
+  const remaining = budget - totalSpent;
+
+  const isOverBudget = remaining < 0;
+
+  const percentUsed = budget > 0 ? Math.min(Math.max((totalSpent / budget) * 100, 0), 100) : 0;
+
   const handleDelete = () => {
     const gettingDeleted = window.confirm(
       "Are you sure you want to delete this build?"
@@ -70,8 +83,50 @@ export default function BuildDetails() {
           </div>
           <p><strong>Goal:</strong> {build.goal} </p>
           <p><strong>Status:</strong> {build.status} </p>
-          <p><strong>Budget:</strong> ${build.budget.toLocaleString()} </p>
           <p><strong>Notes:</strong> {build.notes} </p>
+          <div className="budget-panel">
+            {/* Title row for the budget section */}
+            <div className="budget-panel-header">
+              <h4 className="budget-panel-title">Budget Summary</h4>
+
+              {/* Small badge that changes depending on budget state */}
+              <span className={`budget-badge ${isOverBudget ? "budget-badge--danger" : "budget-badge--ok"}`}>
+                {isOverBudget ? "Over Budget" : "On Track"}
+              </span>
+            </div>
+
+            {/* The three key numbers */}
+            <div className="budget-stats">
+              <div className="budget-stat">
+                <span className="budget-label">Budget</span>
+                <span className="budget-value">${budget.toLocaleString()}</span>
+              </div>
+
+              <div className="budget-stat">
+                <span className="budget-label">Spent</span>
+                <span className="budget-value">${totalSpent.toLocaleString()}</span>
+              </div>
+
+              <div className="budget-stat">
+                <span className="budget-label">Remaining</span>
+                <span className={`budget-value ${isOverBudget ? "budget-value--danger" : "budget-value--ok"}`}>
+                  ${remaining.toLocaleString()}
+                </span>
+              </div>
+            </div>
+            <div className="budget-bar">
+              <div
+                className={`budget-bar-fill ${isOverBudget ? "budget-bar-fill--danger" : ""}`}
+                style={{ width: `${percentUsed}%` }}
+              />
+            </div>
+            {isOverBudget && (
+              <p className="budget-warning">
+                You are over budget by ${Math.abs(remaining).toLocaleString()}.
+              </p>
+            )}
+          </div>
+          
         </div>
 
         <div className="build-details-image">
