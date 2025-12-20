@@ -3,6 +3,7 @@ import { getBuildbyId, deleteBuild, updateBuildVisibility } from "../../managers
 import { useEffect, useState } from "react";
 import ModCard from "../mods/ModCard";
 import { deleteModPart } from "../../managers/modManager";
+import { tryGetLoggedInUser } from "../../managers/authManager";
 
 export default function BuildDetails() {
   const { id } = useParams();
@@ -16,6 +17,8 @@ export default function BuildDetails() {
   if (!build) {
     return <p>No Build</p>
   }
+
+  const isOwner = tryGetLoggedInUser?.id === build.userProfileId;
 
   const budget = Number(build.budget) || 0;
 
@@ -67,6 +70,8 @@ export default function BuildDetails() {
           Back to My Builds
         </Link>
 
+      {isOwner && (
+        <>
         <Link to={`/builds/edit/${build.id}`} className="btn btn-primary">
           Edit Build
         </Link>
@@ -74,7 +79,7 @@ export default function BuildDetails() {
         <button onClick={handleDelete} className="btn btn-danger">
           Delete Your Build
         </button>
-
+        
         <button
           className="btn btn-outline-dark"
           onClick={() => {
@@ -85,6 +90,8 @@ export default function BuildDetails() {
           }}>
           {build.isPublic ? "Make Private" : "Make Public"}
         </button>
+        </>
+      )}
       </div>
 
       <div className="build-details-h">
@@ -148,9 +155,13 @@ export default function BuildDetails() {
       <div className="build-details-mods">
         <div className="build-details-mods-h">
           <h3>Mod Parts for your {build.vehicleName}</h3>
+          {isOwner && (
+          <>
           <Link to={`/builds/${build.id}/mods/new`}className="btn btn-primary">
             + Add Mod Part
           </Link>
+          </>
+          )}
         </div>
 
         <div className="build-details-mods-list">
