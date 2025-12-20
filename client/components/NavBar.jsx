@@ -23,6 +23,13 @@ return (
         <NavbarBrand className="navbar-logo" tag={RRNavLink} to="/">
         ModForge
         </NavbarBrand>
+        <Nav navbar className="me-auto">
+            <NavItem>
+                <NavLink tag={RRNavLink} to="/community">
+                    Community
+                </NavLink>
+            </NavItem>
+        </Nav>
         {loggedInUser ? (
         <>
             <NavbarToggler onClick={toggleNavbar} />

@@ -22,6 +22,12 @@ export default function BuildCard({ build }) {
           {build.notes}
         </p>
 
+        {build.isPublic ? (
+          <span className="badge bg-danger ms-2">Public</span>
+        ) : (
+          <span className="badge bg-dark ms-2">Private</span>
+        )}
+
         <div className="build-card-buttons">
           <Link to={`/builds/${build.id}`} className="btn btn-sm btn-primary">
             View Details
