@@ -48,7 +48,8 @@ private ModForgeDbContext _dbContext;
       StartDate = b.StartDate,
       Budget = b.Budget,
       Notes = b.Notes,
-      CreatedAt = b.CreatedAt
+      CreatedAt = b.CreatedAt,
+      IsPublic = b.IsPublic
     }).ToList();
 
     return Ok(builds);
@@ -79,8 +80,7 @@ private ModForgeDbContext _dbContext;
     }
 
     if (build.UserProfileId == profile.Id) return Ok(build);
-
-    if (build.UserProfileId == profile.Id) return Ok(build);
+    if (build.IsPublic) return Ok(build);
 
     return Unauthorized();
   }

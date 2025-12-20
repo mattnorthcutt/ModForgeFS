@@ -11,7 +11,7 @@ export default function BuildList() {
     getMyBuilds().then(setBuilds)
   }, [])
 
-
+  console.log(builds)
   return (
     <div className="build-list page-container">
       <h2>My Builds</h2>
