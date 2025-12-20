@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
 export default function BuildCard({ build }) {
+
+  const isPublic = build?.isPublic ?? build?.IsPublic ?? false;
+
   return (
     <div className="build-card">
       <img src={build.imageLocation} alt={build.vehicleName} className="build-card-image"/>
@@ -22,7 +25,7 @@ export default function BuildCard({ build }) {
           {build.notes}
         </p>
 
-        {build.isPublic ? (
+        {isPublic ? (
           <span className="badge bg-danger ms-2">Public</span>
         ) : (
           <span className="badge bg-dark ms-2">Private</span>

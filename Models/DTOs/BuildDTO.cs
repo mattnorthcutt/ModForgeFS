@@ -11,4 +11,5 @@ public class BuildDTO
     public decimal Budget { get; set; }
     public string Notes { get; set; }
     public DateTime CreatedAt { get; set; }
+    public bool IsPublic { get; set; }
 }
