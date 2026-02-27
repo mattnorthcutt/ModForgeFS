@@ -75,7 +75,7 @@ app.MapControllers();
 app.MapGet("/health", () => Results.Ok("ok"));
 app.MapGet("/dbcheck", (IConfiguration config) =>
 {
-    var cs = config.GetConnectionString("DefaultConnection");
+    var cs = config["ModForgeDbConnectionString"];
     return Results.Ok(new { hasConnectionString = !string.IsNullOrWhiteSpace(cs) });
 });
 app.Run();
