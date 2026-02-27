@@ -73,4 +73,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/health", () => Results.Ok("ok"));
+app.MapGet("/dbcheck", (IConfiguration config) =>
+{
+    var cs = config.GetConnectionString("DefaultConnection");
+    return Results.Ok(new { hasConnectionString = !string.IsNullOrWhiteSpace(cs) });
+});
 app.Run();
