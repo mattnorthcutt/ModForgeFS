@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromHeader(Name = "Authorization")] string authHeader)
+    public async Task<IActionResult> Login([FromHeader(Name = "Authorization")] string authHeader)
     {
         try
         {
@@ -42,10 +42,16 @@ public class AuthController : ControllerBase
             string password = creds.Substring(separator + 1);
 
             var user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
             var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
             var hasher = new PasswordHasher<IdentityUser>();
             var result = hasher.VerifyHashedPassword(user, user.PasswordHash, password);
-            if (user != null && result == PasswordVerificationResult.Success)
+            if (result == PasswordVerificationResult.Success)
             {
                 var claims = new List<Claim>
                 {
@@ -63,14 +69,14 @@ public class AuthController : ControllerBase
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                HttpContext.SignInAsync(
+                await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity)).Wait();
+                new ClaimsPrincipal(claimsIdentity));
 
                 return Ok();
             }
 
-            return new UnauthorizedResult();
+            return Unauthorized();
         }
         catch (Exception ex)
         {

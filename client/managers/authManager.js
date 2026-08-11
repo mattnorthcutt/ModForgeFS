@@ -1,9 +1,10 @@
-const _apiUrl = "/api/auth";
+const API = import.meta.env.VITE_API_BASE_URL;
+const _apiUrl = `${API}/api/auth`;
 
 export const login = (email, password) => {
   return fetch(_apiUrl + "/login", {
     method: "POST",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       Authorization: `Basic ${btoa(`${email}:${password}`)}`,
     },
@@ -17,11 +18,16 @@ export const login = (email, password) => {
 };
 
 export const logout = () => {
-  return fetch(_apiUrl + "/logout");
+  return fetch(_apiUrl + "/logout", {
+    method: "POST",
+    credentials: "include",
+  });
 };
 
 export const tryGetLoggedInUser = () => {
-  return fetch(_apiUrl + "/me").then((res) => {
+  return fetch(_apiUrl + "/me", {
+    credentials: "include",
+  }).then((res) => {
     return res.status === 401 ? Promise.resolve(null) : res.json();
   });
 };
@@ -29,7 +35,7 @@ export const tryGetLoggedInUser = () => {
 export const register = (userProfile) => {
   userProfile.password = btoa(userProfile.password);
   return fetch(_apiUrl + "/register", {
-    credentials: "same-origin",
+    credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",

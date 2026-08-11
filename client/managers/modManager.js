@@ -1,9 +1,10 @@
-const _apiUrl = "/api/modpart"
+const API = import.meta.env.VITE_API_BASE_URL;
+const _apiUrl = `${API}/api/modpart`;
 
 export const createModPart = (modPart) => {
   return fetch(_apiUrl, {
     method: "POST",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json"
     },
@@ -14,7 +15,7 @@ export const createModPart = (modPart) => {
 export const updateModPart = (id, modPart) => {
   return fetch(`${_apiUrl}/${id}`, {
     method: "PUT",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -23,20 +24,22 @@ export const updateModPart = (id, modPart) => {
 };
 
 export const getModPartById = (id) => {
-  return fetch(`${_apiUrl}/${id}`).then((res) => res.json());
+  return fetch(`${_apiUrl}/${id}`, {
+    credentials: "include",
+  }).then((res) => res.json());
 };
 
 export const deleteModPart = (id) => {
   return fetch(`${_apiUrl}/${id}`, {
     method: "DELETE",
-    credentials: "same-origin",
+    credentials: "include",
   });
 };
 
 export const setTagsForModPart = (modPartId, tagIds) => {
   return fetch(`${_apiUrl}/${modPartId}/tags`, {
     method: "PUT",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
