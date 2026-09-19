@@ -43,7 +43,9 @@ export const register = (userProfile) => {
     body: JSON.stringify(userProfile),
   }).then((res) => {
     if (res.ok) {
-      return fetch(_apiUrl + "/me").then((res) => res.json());
+      return fetch(_apiUrl + "/me", {
+        credentials: "include",
+      }).then((res) => res.json());
     } else if (res.status === 400) {
       return res.json();
     } else {

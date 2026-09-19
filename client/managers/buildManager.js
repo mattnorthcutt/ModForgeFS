@@ -4,13 +4,25 @@ const _apiUrl = `${API}/api/build`;
 export const getMyBuilds = () => {
   return fetch(`${_apiUrl}/mybuilds`, {
     credentials: "include",
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch builds. Status: ${res.status}`)
+    }
+
+    return res.json()
+  });
 }
 
 export const getBuildbyId = (id) => {
   return fetch(`${_apiUrl}/${id}`, {
     credentials: "include",
-  }).then((res) => res.json())
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch build: Status: ${res.status}`)
+    } 
+
+    return res.json()
+  })
 }
 
 export const createBuild = (build) => {
@@ -21,7 +33,13 @@ export const createBuild = (build) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(build),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to create build. Status: ${res.status}`)
+    }
+
+    return res.json()
+  });
 };
 
 export const updateBuild = (id, build) => {
@@ -32,7 +50,11 @@ export const updateBuild = (id, build) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(build),
-  });
+  }).then((res) => {
+    if (!res.ok) {
+    throw new Error(`Failed to update build. Status: ${res.status}`)
+    }
+  })
 };
 
 export const deleteBuild = (id) => {
