@@ -137,9 +137,8 @@ public class AuthController : ControllerBase
             {
                 FirstName = registration.FirstName,
                 LastName = registration.LastName,
-                ImageLocation = !string.IsNullOrEmpty(registration.ImageLocation) && registration.ImageLocation.Length <= 255 
-                ? registration.ImageLocation 
-                : null,
+                ImageLocation = !string.IsNullOrWhiteSpace(registration.ImageLocation) && registration.ImageLocation.Length <= 255 
+                ? registration.ImageLocation : "https://placehold.co/150x150",
                 CreateDateTime = DateTime.Now,
                 IdentityUserId = user.Id,
             });
